@@ -25,11 +25,17 @@ git clone https://github.com/SnaffCon/Snaffler.git
 git clone https://github.com/s0lst1c3/eaphammer.git
 git clone https://github.com/lgandx/Responder.git
 git clone https://github.com/carlospolop/PEASS-ng/tree/master/winPEAS/winPEASexe
+git clone https://github.com/rebootuser/LinEnum.git
+git clone https://github.com/InteliSecureLabs/Linux_Exploit_Suggester.git
+git clone https://github.com/bitsadmin/wesng --depth 1
+#Don't forget to run wes.py --update to update the wesng database!
+
 cd $current_dir
 #apt downloads
 apt install ipcalc -y
 apt install rsh-client
 apt install faker -y
+echo "Don't forget to run wes.py --update to update the wesng database!"
 echo "Done. Have fun!"
 }
 
