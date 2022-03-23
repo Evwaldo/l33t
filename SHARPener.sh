@@ -1,6 +1,6 @@
-#!/bin/bash
+#! /bin/bash
 # This should fix the sharphound jsmin issue that it always complains about. 
-#I got sick of having to Google the solution each time.
+# I got sick of having to Google the solution each time.
 
 apt install wget -y
 
