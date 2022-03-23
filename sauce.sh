@@ -28,6 +28,7 @@ git clone https://github.com/carlospolop/PEASS-ng/tree/master/winPEAS/winPEASexe
 cd $current_dir
 #apt downloads
 apt install ipcalc -y
+apt install rsh-client
 apt install faker -y
 echo "Done. Have fun!"
 }
