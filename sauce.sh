@@ -29,12 +29,16 @@ git clone https://github.com/rebootuser/LinEnum.git
 git clone https://github.com/InteliSecureLabs/Linux_Exploit_Suggester.git
 git clone https://github.com/bitsadmin/wesng --depth 1
 #Don't forget to run wes.py --update to update the wesng database!
+git clone https://github.com/login-securite/DonPAPI
+
 
 cd $current_dir
 #apt downloads
 apt install ipcalc -y
 apt install rsh-client
 apt install faker -y
+apt install python3-pip -y #Needed for DonPapi
+python3 -m pip install -r /root/Desktop/tools/DonPAPI/requirements.txt
 echo "Don't forget to run wes.py --update to update the wesng database!"
 echo "Done. Have fun!"
 }
