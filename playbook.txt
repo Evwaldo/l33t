@@ -1,4 +1,4 @@
-#### Run Run ####
+
 
 **Mount**
 ---------------------
@@ -7,7 +7,6 @@ mount -t cifs //<ip>/<share name/ /mnt/share/ -o username=<username>
 
 **Nmap**
 --------------------
-###From @killswitch-GUI :: 
 
 Discovery - nmap -Pn -n -sS -p 21-23,25,53,111,137,139,445,80,443,3389,5800,5900,8443,8080 --min-hostgroup 255 --min-rtt-timeout 0ms --max-rtt-timeout 100ms --max-retries 1 --max-scan-delay 0 --min-rate 2000 -oA CLIENT-# -vvv --open -iL <IPLIST>
 
