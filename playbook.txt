@@ -76,7 +76,7 @@ In Linux:
 - powerpick Invoke-BloodHound --CollectionMethod All
 - Download Bloodhound.zip
 
-**BloodHound - Python Ingestor**
+**BloodHound - Python Ingestor  (Easier to use Windows Sharhound method above)**
 --------------------
 - git clone https://github.com/fox-it/BloodHound.py
 - cd /BloodHound.py
