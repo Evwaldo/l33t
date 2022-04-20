@@ -1,4 +1,5 @@
 #! /bin/bash
+#RUN WITH SUDO!
 #This is just a quick script I put together to install some of the tools that might be used on assessment. Because I'm lazy.
 #TODO Add phishihg template repo?
 
@@ -48,6 +49,8 @@ python3 -m pip install -r /root/Desktop/tools/DonPAPI/requirements.txt
 python3 -m pip install pipx
 pipx ensurepath
 pipx install crackmapexec
+echo 'alias cme="crackmapexec"' >> ~/.bashrc_aliases
+source ~/.bashrc_aliases
 
 echo "Don't forget to run wes.py --update to update the wesng database!"
 echo "Done. Have fun!"
