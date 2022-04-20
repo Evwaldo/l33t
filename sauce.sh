@@ -32,13 +32,22 @@ git clone https://github.com/bitsadmin/wesng --depth 1
 git clone https://github.com/login-securite/DonPAPI
 
 
+
+
+
 cd $current_dir
 #apt downloads
 apt install ipcalc -y
 apt install rsh-client
-apt install faker -y
-apt install python3-pip -y #Needed for DonPapi
+apt install faker -y #Allows for the creation of fake SSNs and Credit card numbers for egress testing.
+apt install python3-pip -y #Needed for DonPapi and CME
 python3 -m pip install -r /root/Desktop/tools/DonPAPI/requirements.txt
+
+#cme comes installed on the kali boxes we use, but lately has had some issues. This will install the latest python3 version, which is better anyways.
+python3 -m pip install pipx
+pipx ensurepath
+pipx install crackmapexec
+
 echo "Don't forget to run wes.py --update to update the wesng database!"
 echo "Done. Have fun!"
 }
