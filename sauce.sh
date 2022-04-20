@@ -1,7 +1,7 @@
 #! /bin/bash
 #RUN WITH SUDO!
 #This is just a quick script I put together to install some of the tools that might be used on assessment. Because I'm lazy.
-#TODO Add phishihg template repo?
+#TODO Add phishihg template repo, and add payload encoding functions.
 
 
 function folder_check () {
