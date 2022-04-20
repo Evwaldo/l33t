@@ -1,7 +1,7 @@
 #! /bin/bash
 #RUN WITH SUDO!
 #This is just a quick script I put together to install some of the tools that might be used on assessment. Because I'm lazy.
-#TODO Add phishihg template repo, and add payload encoding functions.
+#TODO Add phishihg template repo, and add payload encoding functions. Need to fix cme alias issue.
 
 
 function folder_check () {
@@ -49,11 +49,11 @@ python3 -m pip install -r /root/Desktop/tools/DonPAPI/requirements.txt
 python3 -m pip install pipx
 pipx ensurepath
 pipx install crackmapexec
-echo 'alias cme="crackmapexec"' >> ~/.bashrc_aliases
+echo 'alias cme="crackmapexec"' >> ~/.bash_aliases
 
 
 echo "Don't forget to run wes.py --update to update the wesng database!"
-echo "IMPORTANT: Run the command: source ~/.bashrc_aliases
+echo "IMPORTANT: Run the command: source ~/.bash_aliases"
 echo "Otherwise you will have to type crackmapexec instead of cme, which is a pain."
 echo "Happy Hacking!"
 }
