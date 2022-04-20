@@ -37,6 +37,7 @@ git clone https://github.com/login-securite/DonPAPI
 
 cd $current_dir
 #apt downloads
+apt update -y
 apt install ipcalc -y
 apt install rsh-client
 apt install faker -y #Allows for the creation of fake SSNs and Credit card numbers for egress testing.
