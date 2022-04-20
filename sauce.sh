@@ -50,6 +50,7 @@ python3 -m pip install pipx
 pipx ensurepath
 pipx install crackmapexec
 echo 'alias cme="crackmapexec"' >> ~/.bashrc_aliases
+sleep 3
 source ~/.bashrc_aliases
 
 echo "Don't forget to run wes.py --update to update the wesng database!"
