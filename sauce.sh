@@ -50,10 +50,12 @@ python3 -m pip install pipx
 pipx ensurepath
 pipx install crackmapexec
 echo 'alias cme="crackmapexec"' >> ~/.bashrc_aliases
-. ~/.bashrc_aliases #modify aliases for cme
+
 
 echo "Don't forget to run wes.py --update to update the wesng database!"
-echo "Done. Have fun!"
+echo "IMPORTANT: Run the command: source ~/.bashrc_aliases
+echo "Otherwise you will have to type crackmapexec instead of cme, which is a pain."
+echo "Happy Hacking!"
 }
 
 folder_check
