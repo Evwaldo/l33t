@@ -40,6 +40,8 @@ cd $current_dir
 #apt downloads
 apt update -y
 apt install ipcalc -y
+#Termshark should be ran as root.
+apt install termshark -y
 apt install rsh-client
 apt install faker -y #Allows for the creation of fake SSNs and Credit card numbers for egress testing.
 apt install python3-pip -y #Needed for DonPapi and CME
